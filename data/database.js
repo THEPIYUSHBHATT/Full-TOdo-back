@@ -4,4 +4,4 @@ export const connectDb = mongoose
     dbName: 'TODOss',
   })
   .then(() => console.log('Database connected'))
-  .catch((err) => console.log(e))
+  .catch((e) => console.log(e))
