@@ -12,16 +12,26 @@ config({
   path: './data/config.env',
 })
 
-//using middelwears
+// Using middlewares
 app.use(express.json())
 app.use(cookieParser())
-app.use(errorMiddleware)
-app.use(cors({
-  origin: [process.env.FRONTEND_URL],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
-}))
 
-//using routes
+// Configure CORS
+app.use(
+  cors({
+    origin: [
+      process.env.FRONTEND_URL, // e.g., http://localhost:5173 or your deployed frontend URL
+      'http://localhost:5174/', // Explicitly allow localhost:5174 for development
+    ].filter(Boolean), // Remove falsy values (e.g., undefined FRONTEND_URL)
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include OPTIONS for preflight requests
+    credentials: true, // Allow cookies and credentials
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+  })
+)
+
+// Using routes
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/task', taskRouter)
+
+// Error middleware (must be after routes)
+app.use(errorMiddleware)
