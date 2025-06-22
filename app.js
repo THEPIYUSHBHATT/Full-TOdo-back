@@ -19,13 +19,9 @@ app.use(cookieParser())
 // Configure CORS
 app.use(
   cors({
-    origin: [
-      process.env.FRONTEND_URL, // e.g., http://localhost:5173 or your deployed frontend URL
-      'http://localhost:5174/', // Explicitly allow localhost:5174 for development
-    ].filter(Boolean), // Remove falsy values (e.g., undefined FRONTEND_URL)
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include OPTIONS for preflight requests
-    credentials: true, // Allow cookies and credentials
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+    origin: [process.env.FRONTEND_URL],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
   })
 )
 
